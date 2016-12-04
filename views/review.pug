@@ -22,8 +22,8 @@ block content
                         else
                             i.material-icons.red-text not_interested
                     th
-                        if review.fixed
-                            moment(review.fixed).format('YYYY/MM/DD')
+                        if review.finished
+                            span=moment(review.finished).format('YYYY/MM/DD HH:mm:ss')
                         else
                             |---
 

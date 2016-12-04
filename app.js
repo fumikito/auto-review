@@ -7,11 +7,16 @@ var express       = require('express'),
     pub           = require('pug'),
     bodyParser    = require('body-parser'),
     configs       = require('config'),
-    mongoose      = require('mongoose');
+    mongoose      = require('mongoose'),
+    mkdirp        = require('mkdirp'),
+    exec          = require('child_process').exec,
+    https         = require('follow-redirects').https,
+    fs            = require('fs');
 
 // Set global
 global.appRoot = require('app-root-path');
-app.set('configs', configs);
+
+var command = configs.get('command');
 
 // Set views
 app.set('views', __dirname + '/views');
@@ -66,19 +71,57 @@ app.post('/', function(req, res, next){
   var themeName = matched[1];
   var version    = matched[2];
   try {
-    var theme = new Theme({
-      name: themeName,
-      version: version,
-      success: false,
-      url: url
-    });
-    theme.save(function (err) {
-      if (err) {
-        throw new Error(err);
-      } else {
-        // Data was successfully saved.
-        res.redirect('/theme/' + themeName);
+    // Make directory
+    var dir = appRoot + '/public/themes/' + themeName;
+    if (!fs.existsSync(dir)) {
+      if ( ! mkdirp.sync(dir) ){
+        throw new Error('Failed to create directory');
       }
+    }
+    // Get data
+    var endpoint = url + '?nostats=1';
+    // Download data
+    var file = fs.createWriteStream(dir + '/' + themeName + '.' + version + '.zip');
+    console.log('Retrieve', endpoint);
+    var request = https.get(endpoint, function(response) {
+      response.pipe(file);
+      file.on('finish', function() {
+        console.log('Finish!');
+        file.close(function(){
+          var theme = new Theme({
+            name: themeName,
+            version: version,
+            success: false,
+            url: url
+          });
+          theme.save(function (err) {
+            if (err) {
+              throw new Error(err);
+            } else {
+              // Data was successfully saved. Do shell command
+              exec(command, function(err, stdout, stderr){
+                if(err){
+                  theme.message = stderr;
+                }else{
+                  theme.success = true;
+                  theme.message = stdout;
+                }
+                theme.updated  = new Date();
+                theme.finished = new Date();
+                theme.save(function(err){
+                  if (err) {
+                    console.log(err);
+                  }
+                });
+              });
+              // Do transaction
+              res.redirect('/theme/' + themeName);
+            }
+          });
+        });
+      });
+    }).on('error', function(err){
+      throw new Error(err);
     });
   } catch (err) {
     error = new Error(err);

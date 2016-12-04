@@ -16,7 +16,7 @@ block content
                         span=review.version
                     p= moment(review.created).format('YYYY/MM/DD')
                     if review.finished
-                        a.secondary-content(href="/review/#{review._id}")
+                        a.secondary-content(href="/review/" + review._id)
                             i.material-icons send
                     else
                         span.secondary-content
