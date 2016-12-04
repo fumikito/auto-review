@@ -1,0 +1,11 @@
+extends layout
+
+block content
+    form(method="post" action="/").upload-file
+        h1 Upload Your Theme to be Reviewed
+        .row
+            .input-field.col.s12
+                input(type="text", name="theme_name", id="theme_url")
+                label(for="theme_url") Your Theme URL
+        p.submit.center
+            button.btn.waves-effect.waves-light(type="submit") Submit

@@ -1,0 +1,49 @@
+{
+  "name": "auto-review",
+  "version": "0.7.0",
+  "description": "An application for theme review automation for WordPress.org",
+  "main": "index.js",
+  "scripts": {
+    "start": "NODE_TLS_REJECT_UNAUTHORIZED=0; nodemon -L ./bin/www",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "gulp": "gulp"
+  },
+  "keywords": [
+    "WordPress"
+  ],
+  "author": "fumikito <takahashi.fumiki@hametuha.co.jp>",
+  "license": "GPL-3.0",
+  "dependencies": {
+    "app-root-path": "^2.0.1",
+    "body-parser": "^1.15.2",
+    "config": "^1.24.0",
+    "connect-mongo": "^1.3.2",
+    "cookie-parser": "^1.4.3",
+    "express": "^4.14.0",
+    "mkdirp": "^0.5.1",
+    "moment": "^2.17.1",
+    "mongoose": "^4.7.1",
+    "morgan": "^1.7.0",
+    "nodemon": "^1.11.0",
+    "pug": "^2.0.0-beta6",
+    "serve-favicon": "^2.3.2"
+  },
+  "devDependencies": {
+    "event-stream": "^3.3.4",
+    "gulp": "^3.9.1",
+    "gulp-autoprefixer": "^3.1.1",
+    "gulp-jshint": "^2.0.4",
+    "gulp-load-plugins": "^1.4.0",
+    "gulp-notify": "^2.2.0",
+    "gulp-plumber": "^1.1.0",
+    "gulp-sass": "^2.3.2",
+    "gulp-sass-bulk-import": "^1.0.1",
+    "gulp-sourcemaps": "^1.9.1",
+    "gulp-uglify": "^2.0.0",
+    "imagemin-pngquant": "^5.0.0",
+    "jquery": "^3.1.1",
+    "jshint": "^2.9.4",
+    "jshint-stylish": "^2.2.1",
+    "materialize-css": "^0.97.8"
+  }
+}

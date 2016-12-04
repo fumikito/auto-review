@@ -1,0 +1,30 @@
+extends layout
+
+block content
+    form(method="post" action="/").upload-file
+        h1 Review Result
+
+        table
+            thead
+                tr
+                    th Name
+                    th Version
+                    th Status
+                    th Finished
+            tbody
+                tr
+                    th
+                        a(href=review.url)=review.name
+                    th=review.version
+                    th
+                        if review.success
+                            i.material-icons.teal-text check_circle
+                        else
+                            i.material-icons.red-text not_interested
+                    th
+                        if review.fixed
+                            moment(review.fixed).format('YYYY/MM/DD')
+                        else
+                            |---
+
+        pre= review.message

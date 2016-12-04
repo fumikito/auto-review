@@ -1,0 +1,23 @@
+extends layout
+
+block content
+    form(method="post" action="/").upload-file
+        ul.collection
+            li.collection-header
+                h1=title
+            each review in reviews
+                li.collection-item.avatar
+                    if review.success
+                        i.material-icons.circle.teal check_circle
+                    else
+                        i.material-icons.red.circle not_interested
+                    span.title
+                        a(href="/theme/" + review.name)= review.name
+                        span=review.version
+                    p= moment(review.created).format('YYYY/MM/DD')
+                    if review.finished
+                        a.secondary-content(href="/review/#{review._id}")
+                            i.material-icons send
+                    else
+                        span.secondary-content
+                            i.material-icons.grey-text timer

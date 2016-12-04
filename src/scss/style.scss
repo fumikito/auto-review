@@ -1,0 +1,11 @@
+@import "_variables.scss";
+@import "mixins/*";
+@import "materialize_override";
+
+html, body, .container-mikkai, .row-mikkai, .col-mikkai{
+  height: 100% !important;
+  margin-bottom: 0 !important;
+}
+
+@import "materialize";
+@import "parts/*";
