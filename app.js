@@ -62,7 +62,7 @@ app.post('/', function(req, res, next){
     return next(error);
   }
   // Grab theme name and version
-  var matched = url.match(/^https:\/\/wordpress\.org\/themes\/download\/(.*)\.([0-9]+\.[0-9]+\.[0-9]+)\.zip/);
+  var matched = url.match(/^https:\/\/wordpress\.org\/themes\/download\/([^.]*)\.(.*)\.zip/);
   if ( ! matched ) {
     error = new Error( 'Cannot get theme name and version. Your URL must be malformed.' );
     error.status = 400;
